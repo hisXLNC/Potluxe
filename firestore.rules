@@ -1,0 +1,43 @@
+rules_version = '2';
+
+// Tableside access rules.
+//  - Nobody can list events: you can only open one if you know its 8-character code.
+//  - Only a host (someone holding the secret host key) can change or delete the event.
+//  - A guest can only write their own RSVP/order; hosts can edit any guest.
+service cloud.firestore {
+  match /databases/{db}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function isHost(code) {
+      return signedIn() && exists(/databases/$(db)/documents/events/$(code)/hosts/$(request.auth.uid));
+    }
+
+    match /events/{code} {
+      allow get: if signedIn();
+      allow list: if false;
+      allow create: if signedIn()
+        && code.matches('^[A-Z2-9]{8}$')
+        && request.resource.data.hostKeyHash is string
+        && request.resource.data.hostKeyHash.size() == 64;
+      allow update: if isHost(code) && request.resource.data.hostKeyHash == resource.data.hostKeyHash;
+      allow delete: if isHost(code);
+
+      // Proof of host-ship: you may only write your own host record if you know the host key.
+      match /hosts/{uid} {
+        allow get: if signedIn() && request.auth.uid == uid;
+        allow create, update: if signedIn()
+          && request.auth.uid == uid
+          && request.resource.data.keys().hasOnly(['key'])
+          && hashing.sha256(request.resource.data.key).toHexString().lower()
+             == get(/databases/$(db)/documents/events/$(code)).data.hostKeyHash;
+        allow delete: if isHost(code);
+      }
+
+      match /guests/{gid} {
+        allow read: if signedIn();
+        allow write: if signedIn() && (gid == request.auth.uid || isHost(code));
+      }
+    }
+  }
+}
