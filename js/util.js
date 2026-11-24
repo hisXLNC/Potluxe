@@ -88,7 +88,7 @@ export function calendarLinks(ev, url) {
   const details = `${ev.blurb || ''}\n\n${url}`.trim();
   const google = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(ev.title)}&dates=${icsStamp(start)}/${icsStamp(end)}&location=${encodeURIComponent(where)}&details=${encodeURIComponent(details)}`;
   const escIcs = (s) => (s || '').replace(/([,;\\])/g, '\\$1').replace(/\n/g, '\\n');
-  const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Tableside//EN', 'BEGIN:VEVENT', `UID:${ev.id}@tableside`, `DTSTAMP:${icsStamp(new Date())}`, `DTSTART:${icsStamp(start)}`, `DTEND:${icsStamp(end)}`, `SUMMARY:${escIcs(ev.title)}`, `LOCATION:${escIcs(where)}`, `DESCRIPTION:${escIcs(details)}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+  const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Potluxe//EN', 'BEGIN:VEVENT', `UID:${ev.id}@potluxe`, `DTSTAMP:${icsStamp(new Date())}`, `DTSTART:${icsStamp(start)}`, `DTEND:${icsStamp(end)}`, `SUMMARY:${escIcs(ev.title)}`, `LOCATION:${escIcs(where)}`, `DESCRIPTION:${escIcs(details)}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
   return { google, ics: `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}` };
 }
 

@@ -1,6 +1,6 @@
 rules_version = '2';
 
-// Tableside access rules.
+// Potluxe access rules.
 //  - Nobody can list events: you can only open one if you know its 8-character code.
 //  - Only a host (someone holding the secret host key) can change or delete the event.
 //  - A guest can only write their own RSVP/order; hosts can edit any guest.

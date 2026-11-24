@@ -77,7 +77,7 @@ function demoStore() {
   if (!uid) ls.set('ts:uid', (uid = rand(20)));
   const read = () => ls.get(KEY, { events: {}, guests: {}, hosts: {} });
   const listeners = new Set();
-  const chan = 'BroadcastChannel' in window ? new BroadcastChannel('tableside') : null;
+  const chan = 'BroadcastChannel' in window ? new BroadcastChannel('potluxe') : null;
   const fire = () => listeners.forEach((fn) => fn());
   const write = (db) => {
     ls.set(KEY, db);

@@ -47,7 +47,7 @@ function Home({ store, go }) {
   const [code, setCode] = useState('');
   const [err, setErr] = useState('');
   const mine = ls.get('ts:mine', []);
-  useEffect(() => { document.title = 'Tableside'; }, []);
+  useEffect(() => { document.title = 'Potluxe'; }, []);
   const join = (e) => {
     e.preventDefault();
     const c = cleanCode(code);
@@ -58,7 +58,7 @@ function Home({ store, go }) {
     <main class="page home">
       <section class="hero">
         <div class="hero-plates" aria-hidden="true"><span>🍔</span><span>🥩</span><span>🌮</span><span>🥗</span><span>🍰</span></div>
-        <p class="brand">Tableside</p>
+        <p class="brand">Potluxe</p>
         <h1>Dinner at yours, sorted.</h1>
         <p class="hero-sub">Send one private link. Guests reply, choose their food, claim a dish to bring and see their share of the bill.</p>
         <button type="button" class="btn primary big" onClick=${() => go('new')}>Host a dinner</button>

@@ -1,4 +1,4 @@
-# Tableside
+# Potluxe
 
 Private dinner invites. A host sets up a dinner in a guided flow, shares one link, and guests
 reply, choose their food (with options like doneness and extras), claim dishes to bring and see

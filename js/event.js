@@ -36,7 +36,7 @@ export function EventPage({ store, code, hostKey, go, openShare }) {
     return () => { alive = false; stop1(); stop2(); };
   }, [code]);
 
-  useEffect(() => { if (ev) { rememberEvent(ev, isHost); document.title = `${ev.title} · Tableside`; } }, [ev?.title, ev?.date, isHost]);
+  useEffect(() => { if (ev) { rememberEvent(ev, isHost); document.title = `${ev.title} · Potluxe`; } }, [ev?.title, ev?.date, isHost]);
   useEffect(() => { setLocal(null); }, [actAs]);
 
   if (problem) return html`<${Blank} title="Something went wrong" body=${problem} go=${go} />`;
